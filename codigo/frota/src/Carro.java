@@ -1,4 +1,7 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 
 public class Carro extends Veiculo {
@@ -33,44 +36,45 @@ public class Carro extends Veiculo {
                 '}';
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
-
+    //Métodos Getters e Setters
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
 
-    public int getPortas() {
-        return portas;
+    public String getCategoria() {
+        return categoria;
     }
 
     public void setPortas(int portas) {
         this.portas = portas;
     }
 
-    public double getTotalReabastecido() {
-        return totalReabastecido;
+    public int getPortas() {
+        return portas;
     }
 
     public void setTotalReabastecido(double totalReabastecido) {
         this.totalReabastecido = totalReabastecido;
     }
 
-    public int getQuantRotas() {
-        return quantRotas;
+    public double getTotalReabastecido() {
+        return totalReabastecido;
     }
 
     public void setQuantRotas(int quantRotas) {
         this.quantRotas = quantRotas;
     }
 
-    public List<Rota> getRotas() {
-        return rotas;
-    }
-
     public void setRotas(Rota[] rotas) {
         this.rotas = rotas;
+    }
+
+    public int getQuantRotas() {
+        return quantRotas;
+    }
+
+    public List<Rota> getRotas() {
+        return rotas;
     }
 
     public boolean addRota(Rota rota) {
@@ -88,28 +92,54 @@ public class Carro extends Veiculo {
         quantRotas++;
     }
 
-    public double getKmTotal() {
+    public double KmTotal() {
         double kmTotal = 0.0;
-        for (Rota rota : rotas) {
-            kmTotal += rota.getDistancia();
+        for (int i = 0; i < quantRotas; i++) {
+            kmTotal += rotas[i].getDistancia();
         }
         return kmTotal;
     }
 
-    public double getKmNoMes() {
-        return getKmTotal() / (System.currentTimeMillis() / (3600 * 24 * 30));
+    /**
+     * Calcula a quilometragem rodada pelo carro naquele mes de acordo com a data atual do sistema 
+     * @return valor da quilometragem por mês
+     */
+    public double KmNoMes() {
+    if (quantRotas == 0) {
+        return 0.0; // Não há rotas registradas, então não há quilômetros no mês
     }
+    LocalDate dataAtual = LocalDate.now();
+    double kmNoMes = 0.0;
+    for (int i = 0; i < quantRotas; i++) {
+        LocalDate dataRota = LocalDate.parse(rotas[i].getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
+        if (dataRota.getMonth().equals(dataAtual.getMonth()) && dataRota.getYear() == dataAtual.getYear()) {
+            kmNoMes += rotas[i].getQuilometragem();
+        }
+    }
+    return kmNoMes;
+}
+    /**
+     * Retorna o valor de abastecimento do carro
+     */
     public double abastecer(double litros) {
         double valor = litros * preçoLitro;
         totalReabastecido += litros;
         return valor;
     }
 
+    /**
+     * Método que calcula o valor da autonomia atual do carro
+     * @return valor 
+     */
     public double getAutonomiaAtual() {
-        return getKmTotal() / totalReabastecido;
+        return KmTotal() / totalReabastecido;
     }
 
+    /**
+     * Calcula autonomia máxima de consumo do carro
+     * @return valor 
+     */
     public double getAutonomiaMaxima() {
         return 100.0 / consumo;
     }
@@ -118,6 +148,10 @@ public class Carro extends Veiculo {
         despesaTotal += valor;
     }
 
+    /**
+     * Método de rotorno do valor de despesa total do carro
+     * @return valor da despesa total
+     */
     public double getDespesaTotal() {
         return despesaTotal;
     }
