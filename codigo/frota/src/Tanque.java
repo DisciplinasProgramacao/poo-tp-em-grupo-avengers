@@ -5,18 +5,24 @@ public class Tanque {
     private double capacidadeMaxima;
     private double capacidadeAtual;
     private double totalReabastecido;
+    private String tipoVeiculo;
+    private String combustível;
     
     /**
      * Construtor da classe Tanque
      * @param capacidadeMaxima capacidade máxima do tanque
      * @param capacidadeAtual capacidade inicial do tanque
      */
-    public Tanque(double capacidadeMaxima, double capacidadeAtual) {
+    public Tanque(double capacidadeMaxima, double capacidadeAtual, String tipoVeiculo, String combustível) {
         this.capacidadeMaxima = capacidadeMaxima;
         this.capacidadeAtual = capacidadeAtual;
-        this.totalReabastecido = 0;
+        this.tipoVeiculo = tipoVeiculo;
+        this.combustível = combustível;
     }
     
+    public Tanque(String modelo, double capacidadeAtual2) {
+    }
+
     /**
      * Abastece o tanque com uma quantidade especifica de litros.
      * @param litros quantidade a ser abastecida.
@@ -48,19 +54,59 @@ public class Tanque {
      * @return autonomia atual que o veículo pode percorrer em km
      */
     public double autonomiaAtual() {
-        return capacidadeAtual * CONSUMO;
+        double consumo = getConsumoMedioCombustivel();
+        return capacidadeAtual * consumo;
     }
 
-    //Gets and Sets
-
-    /**
-     * Obtém o valor da capacidade atual do carro
-     * @return capacidade atual do tanque
-     */
-    public double getCapacidadeAtual() {
-        return capacidadeAtual;
+    public double getConsumoMedioCombustivel() {
+        switch (combustível) {
+            case "álcool":
+                return 7;
+            case "gasolina":
+                return 10;
+            case "diesel":
+                return 4;
+            default:
+                throw new IllegalArgumentException("Combustível inválido");
+        }
+    }
+    public String getTipoVeiculo() {
+        return tipoVeiculo;
     }
 
+    public String getCombustível() {
+        return combustível;
+    }
+
+    public double getManutençãoPrevista() {
+        switch (tipoVeiculo) {
+            case "carro":
+                return 10000;
+            case "van":
+                return 10000;
+            case "furgão":
+                return 12000;
+            case "caminhão":
+                return 20000;
+            default:
+                throw new IllegalArgumentException("Tipo de veículo inválido");
+        }
+    }
+
+    public double getManutençãoPrevistaPeças() {
+        switch (tipoVeiculo) {
+            case "carro":
+                return 10000;
+            case "van":
+                return 12000;
+            case "furgão":
+                return 12000;
+            case "caminhão":
+                return 20000;
+            default:
+                throw new IllegalArgumentException("Tipo de veículo inválido");
+        }
+    }
     /**
      * Obtém o valor da capacidade máxima do carro
      * @return valor da capacidade máxima
