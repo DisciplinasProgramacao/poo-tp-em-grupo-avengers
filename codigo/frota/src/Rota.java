@@ -3,16 +3,20 @@
 public class Rota {
     private double quilometragem;
     private String data;
+    private int quantCarro;
     
     public Rota(double quilometragem, String data) {
         this.quilometragem = quilometragem;
+        quantCarro++;
         this.data = data;
     }
     
     public String relatorio() {
         // Gerar um relatório da rota aqui
         //Mostar a quantidade de carros e o dia do relatorio
-        return "";
+    	StringBuilder relat = new StringBuilder("Relatório de rota");
+    	relat.append(quantCarros + "\n" + data);
+        return relat.toString();
     }
 
 
