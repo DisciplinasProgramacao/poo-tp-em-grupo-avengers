@@ -1,41 +1,18 @@
 import java.util.Date;
-public class Manutencao {
 
+public class Manutencao {
+    private double quilometragem;
     private double valor;
     private Date data;
-    private String descricao;
 
-    public Manutencao(double valor, Date data, String descricao) {
-        this.valor = valor;
-        this.data = data;
-        this.descricao = descricao;
-    }
-
-    //Métodos Getters e Setters 
-    public double getValor() {
-        return valor;
-    }
-    public Date getData() {
-        return data;
-    }
-    public String getDescricao() {
-        return descricao;
-    }
-    public void setData(Date data) {
-        this.data = data;
-    }
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void fazerManutencao(double quilometragem) {
+        this.quilometragem = quilometragem;
+        this.valor = 200.0; 
+        this.data = new Date();
     }
 
-    /**
-     * Mostra dados da manutenção realizada. 
-     */
     public void realizarManutencao() {
-        System.out.println("Manutenção realizada em " + data + " - Descrição: " + descricao + " - Valor: " + valor);
+        System.out.println("Manutenção realizada em " + data + " - Valor: " + valor);
     }
 
     @Override
@@ -43,7 +20,30 @@ public class Manutencao {
         return "Manutencao{" +
                 "valor=" + valor +
                 ", data=" + data +
-                ", descricao='" + descricao + '\'' +
                 '}';
+    }
+    // Getters e Setters
+    public double getQuilometragem() {
+        return quilometragem;
+    }
+
+    public void setQuilometragem(double quilometragem) {
+        this.quilometragem = quilometragem;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setData(Date data) {
+        this.data = data;
     }
 }
