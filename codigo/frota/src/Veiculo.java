@@ -5,15 +5,14 @@ import java.util.List;
 
 public class Veiculo {
     private static final int MAX_ROTAS = 30;
-    private static final double CONSUMO = 8.2;
-    
-    private String placa;
+    protected String placa;
     private List<Rota> rotas;
     int quantRotas;
     private double tanqueAtual;
     private double tanqueMax;
     private double totalReabastecido;
     private Tanque tanque;
+    private Manutencao manutencao;
     
     public Veiculo(String placa, double capacidadeTanque, double capacidadeAtual) {
         this.placa = placa;
