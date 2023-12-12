@@ -93,8 +93,8 @@ public class App {
                 case 3 -> {
                     // Realizar manutenções de um veículo
                     System.out.print("Digite a placa do veículo para realizar manutenção: ");
-                    placa = scanner.nextLine();
-                    veiculoEncontrado = frota.localizarVeiculo(placa);
+                    String placa = scanner.nextLine();
+                    Veiculo veiculoEncontrado = frota.localizarVeiculo(placa);
 
                     if (veiculoEncontrado != null) {
                         veiculoEncontrado.realizarManutencao();
@@ -106,8 +106,8 @@ public class App {
                 case 4 -> {
                     // Mostrar despesa total de um veículo
                     System.out.print("Digite a placa do veículo para mostrar despesa total: ");
-                    placa = scanner.nextLine();
-                    veiculoEncontrado = frota.localizarVeiculo(placa);
+                    String placa = scanner.nextLine();
+                    Veiculo veiculoEncontrado = frota.localizarVeiculo(placa);
 
                     if (veiculoEncontrado != null) {
                         System.out.println("Despesa total do veículo: " + veiculoEncontrado.calcularDespesaTotal());

@@ -5,22 +5,24 @@ import java.util.List;
 
 public class Veiculo {
     private static final int MAX_ROTAS = 30;
-    protected String placa;
+    private String placa;
+    private String tipoVeiculo;
+    private String tipoCombustivel;
     private List<Rota> rotas;
     int quantRotas;
-    private double tanqueAtual;
+    protected double tanqueAtual;
     private double tanqueMax;
     private double totalReabastecido;
     private Tanque tanque;
     private Manutencao manutencao;
     
-    public Veiculo(String placa, double capacidadeTanque, double capacidadeAtual) {
+    public Veiculo(String placa, String tipoVeiculo, String tipoCombustivel) {
         this.placa = placa;
         this.rotas = new ArrayList<>();
         this.quantRotas = 0;
-        this.tanque = new Tanque(capacidadeTanque, capacidadeAtual);
+        this.tanque = new Tanque(tipoVeiculo, placa, tipoCombustivel);
     }
-    
+
     public boolean addRota(Rota rota) {
         if (quantRotas < MAX_ROTAS && autonomiaMaxima() >= rota.getQuilometragem()) {
             rotas.add(rota);
@@ -31,11 +33,11 @@ public class Veiculo {
     }
     
     public double autonomiaMaxima() {
-        return tanqueAtual * CONSUMO;
+        return tanqueMax * Tanque.getConsumo();
     }
     
     public double autonomiaAtual() {
-        return tanqueAtual * CONSUMO;
+        return tanqueAtual * Tanque.getConsumo();
     }
     
     public double abastecer(double litros) {
@@ -59,8 +61,8 @@ public class Veiculo {
     }
     
     public void percorrerRota(Rota rota) {
-        if (autonomiaMaxima() >= rota.getQuilometragem()) {
-            tanqueAtual -= rota.getQuilometragem() / CONSUMO;
+        if (autonomiaMaxima() >= Rota.getQuilometragem()) {
+            tanqueAtual -= Rota.getQuilometragem() / Tanque.getConsumo();
             rotas.add(rota);
             quantRotas++;
         }
@@ -72,12 +74,16 @@ public class Veiculo {
         return placa;
     }
 
-    public static int getMaxRotas() {
-        return MAX_ROTAS;
+    public String getTipoVeiculo() {
+        return tipoVeiculo;
     }
 
-    public static double getConsumo() {
-        return CONSUMO;
+    public String getTipoCombustivel(){
+        return tipoCombustivel;
+    }
+
+    public static int getMaxRotas() {
+        return MAX_ROTAS;
     }
 
     public void setPlaca(String placa) {
@@ -130,5 +136,16 @@ public class Veiculo {
 
     public void setTanque(Tanque tanque) {
         this.tanque = tanque;
+    }
+
+    public char[] relatorioRotas() {
+        return null;
+    }
+
+    public void realizarManutencao() {
+    }
+
+    public String calcularDespesaTotal() {
+        return null;
     }
 }

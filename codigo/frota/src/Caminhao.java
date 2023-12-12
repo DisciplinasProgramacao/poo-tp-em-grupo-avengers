@@ -26,7 +26,6 @@ public class Caminhao {
         this.placa = placa;
         this.rotas = new ArrayList<>();
         this.quantRotas = 0;
-        this.tanque = new Tanque(capacidadeTanque, capacidadeAtual);
     }
     
     public boolean addRota(Rota rota) {
