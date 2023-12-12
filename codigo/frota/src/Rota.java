@@ -15,6 +15,7 @@ public class Rota {
         // Gerar um relatório da rota aqui
         //Mostar a quantidade de carros e o dia do relatorio
     	StringBuilder relat = new StringBuilder("Relatório de rota");
+		relat.append("A rota possui "+ quilometragem +" quilometros ");
     	relat.append(quantCarros + "\n" + data);
         return relat.toString();
     }
