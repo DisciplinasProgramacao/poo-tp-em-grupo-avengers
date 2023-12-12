@@ -1,21 +1,32 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Caminhao extends Veiculo {
+public class Caminhao {
     private static final int MAX_ROTAS = 30;
+    private static final double CONSUMO = 4;
     
-	private double totalReabastecido;
-	private int quantRotas;
-	private Rota[] rotas	
     private String placa;
-	private Tanque tanque;
-	private manutencao Manutencao = new Manutencao();
+    private List<Rota> rotas;
+    int quantRotas;
+    private double tanqueAtual;
+    private double tanqueMax;	
+    private double totalReabastecido;
+    private Tanque tanque;
+    private String tipoTanque = "diesel";
+    private double kilometragem; 
+    private double consumoTotal;
+    private double valorDiesel = 6.09;
+    private double manutencaoProg = 20.000;
+    private double fezManutencao = 0;
+    private double kmManutencao = 0;
+    private double despesa;
     
-    public Caminhao(double consumo, String placa) {
-		tanque = new Tanque(250,4,"diesel");
+    public Caminhao(String placa, double capacidadeTanque, double capacidadeAtual) {
+    	capacidadeTanque = 250;
         this.placa = placa;
         this.rotas = new ArrayList<>();
         this.quantRotas = 0;
+        this.tanque = new Tanque(capacidadeTanque, capacidadeAtual);
     }
     
     public boolean addRota(Rota rota) {
@@ -28,18 +39,18 @@ public class Caminhao extends Veiculo {
     }
     
     public double autonomiaAtual() {
-        return tanque.getCapacidadeAtual() * tanque.getConsumo();
+        return tanqueAtual * CONSUMO;
     }
     
     public double autonomiaMaxima() {
-        return tanque.getCapacidadeMax * tanque.getConsumo();
+        return tanqueMax * CONSUMO;
     }
     
     public double abastecer(double litros) {
         return tanque.abastecer(litros);
     }
     
-    public double kmNoMes() {
+    public double kmMes() {
         double quilometragemMes = 0;
         for (Rota rota : rotas) {
             quilometragemMes += rota.getQuilometragem();
@@ -55,16 +66,35 @@ public class Caminhao extends Veiculo {
         return quilometragemTotal;
     }
     
-    public void percorrerRota(Rota rota) { 
-            tanqueAtual -= rota.getQuilometragem() / tanque.getConsumo();
+    public void percorrerRota(Rota rota) {
+    	//Confere antes se o km da rota + o km rodado desde a ultima manutencao nao ultrapassa o valor exigido para manutencoes
+    	if(kmManutencao + rota.getQuilometragem() < manutencaoProg) {   
+        if (autonomiaMaxima() >= rota.getQuilometragem()) {
+            tanqueAtual -= rota.getQuilometragem() / CONSUMO;
             rotas.add(rota);
             quantRotas++;
+            //Calcula e soma o valor da despesa de acorda com a KM da rota
+            despesa += ( rota.getQuilometragem() / CONSUMO )* valorDiesel;
+        }
+    	}else {
+        //Caso o valor ultrapasse o exigido a manutenção será ordenada
+        	manutencao(); 
         }
     }
-	
-	public void fazerManutencao(){
-			manutencao.fazerManutencao(kmTotal())
+    
+    public void manutencao() {
+    	fezManutencao = kmTotal();
+    	kmManutencao = 0;
+    	//Adicionar 100 reais ao custo da despesa a cada manutencao
+    	despesa += 100;
     }
+    
+    public void consumoTotal() {
+    	if (tipoTanque == "diesel") {
+    		consumoTotal = (kmTotal() / CONSUMO) * valorDiesel;
+    	}
+    }
+
    //Gets and Setters
    
     public Object getPlaca() {
@@ -76,7 +106,7 @@ public class Caminhao extends Veiculo {
     }
 
     public static double getConsumo() {
-        return tanque.getConsumo();
+        return CONSUMO;
     }
 
     public void setPlaca(String placa) {
@@ -99,13 +129,49 @@ public class Caminhao extends Veiculo {
         this.quantRotas = quantRotas;
     }
 
-    public double getTotalReabastecido() {
-        return tanque.geTotalReabastecido();
-    }
-    
-    public void getConsumo() {
-    	return tanque.getConsumo();
+    public double getTanqueAtual() {
+        return tanqueAtual;
     }
 
+    public void setTanqueAtual(double tanqueAtual) {
+        this.tanqueAtual = tanqueAtual;
+    }
+
+    public double getTanqueMax() {
+        return tanqueMax;
+    }
+
+    public void setTanqueMax() {
+        this.tanqueMax = 250;	
+    }
+
+    public double getTotalReabastecido() {
+        return totalReabastecido;
+    }
+
+    public void setTotalReabastecido(double totalReabastecido) {
+        this.totalReabastecido = totalReabastecido;
+    }
+
+    public Tanque getTanque() {
+        return tanque;
+    }
+
+    public void setTanque(Tanque tanque) {
+        this.tanque = tanque;
+    }
     
+    //Retorna a ultima vez em que o veiculo sofreu uma manutencao
+    public double getUltimaManutencao() {
+    	return fezManutencao;
+    }
+    //Retorna a quantidade de KMs até a próxima manutencao obrigatória
+    public double getProximaManutencao() {
+    	return manutencaoProg - kmManutencao;
+    }
+    
+    //Retorna a despesa total do veículo (manutencoes e kilometragem andada)
+    public double getDespesa() {
+    	return despesa;
+    }
 }
