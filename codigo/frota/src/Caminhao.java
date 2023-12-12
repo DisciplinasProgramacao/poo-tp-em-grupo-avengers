@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class caminhao {
+public class Caminhao extends Veiculo {
     private static final int MAX_ROTAS = 30;
     
 	private double totalReabastecido;
@@ -11,7 +11,7 @@ public class caminhao {
 	private Tanque tanque;
 	private manutencao Manutencao = new Manutencao();
     
-    public caminhao(double consumo, String placa) {
+    public Caminhao(double consumo, String placa) {
 		tanque = new Tanque(250,4,"diesel");
         this.placa = placa;
         this.rotas = new ArrayList<>();
