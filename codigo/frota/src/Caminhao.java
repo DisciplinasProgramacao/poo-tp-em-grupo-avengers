@@ -32,7 +32,7 @@ public class Caminhao extends Veiculo {
     }
     
     public double autonomiaMaxima() {
-        return tanque.getCapacidadeMax * tanque.getConsumo();
+        return tanque.getCapacidadeMax() * tanque.getConsumo();
     }
     
     public double abastecer(double litros) {
