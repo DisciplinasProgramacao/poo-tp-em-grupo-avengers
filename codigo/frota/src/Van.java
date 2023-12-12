@@ -1,44 +1,49 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Van extends Veiculo{
 
+    private static String veiculo = "Van";
+    private static final int MAX_ROTAS = 30;
+    protected static final int CAPACIDADE_TANQUE = 60;
+    private String placa;
     private double totalReabastecido;
     private int quantRotas;
-    private Rota[] rotas;
+    private List<Rota> rotas;
     private double consumo;
-    private int MAX_ROTAS;
+    private double despesaTotal;
 
-    public Van(String placa, double capacidadeTanque, double capacidadeAtual) {
-        super(placa, capacidadeTanque, capacidadeAtual);
-        //TODO Auto-generated constructor stub
-        capacidadeTanque = 60;
+    public Van(String placa, String tipoCombustivel) {
+        super(placa, veiculo, tipoCombustivel);
         this.placa = placa;
-        this.rotas = new ArrayList<>();
+        this.rotas = new ArrayList<>(MAX_ROTAS);
         this.quantRotas = 0;
     }
+
     public boolean addRota(Rota rota) {
-        if (quantRotas < MAX_ROTAS && autonomiaMaxima() >= rota.getQuilometragem()) {
-            rotas[quantRotas++] = rota;
+        if (quantRotas < MAX_ROTAS && autonomiaMaxima() >= Rota.getQuilometragem()) {
+            rotas.add(rota);
+            quantRotas++;
             return true;
         }
         return false;
     }
 
     public void percorrerRota(Rota rota) {
-        double distancia = rota.getQuilometragem();
+        double distancia = Rota.getQuilometragem();
         double litros = distancia / consumo;
         totalReabastecido += litros;
         quantRotas++;
     }
 
-    public double KmTotal() {
-        double kmTotal = 0.0;
-        for (int i = 0; i < quantRotas; i++) {
-            kmTotal += rotas[i].getQuilometragem();
+    public double kmTotal() {
+        double quilometragemTotal = 0;
+        for (Rota rota : rotas) {
+            quilometragemTotal += Rota.getQuilometragem();
         }
-        return kmTotal;
+        return quilometragemTotal;
     }
 
     /**
@@ -52,10 +57,10 @@ public class Van extends Veiculo{
     LocalDate dataAtual = LocalDate.now();
     double kmNoMes = 0.0;
     for (int i = 0; i < quantRotas; i++) {
-        LocalDate dataRota = LocalDate.parse(rotas[i].getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        LocalDate dataRota = LocalDate.parse(Rota.getData(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 
         if (dataRota.getMonth().equals(dataAtual.getMonth()) && dataRota.getYear() == dataAtual.getYear()) {
-            kmNoMes += rotas[i].getQuilometragem();
+            kmNoMes += Rota.getQuilometragem();
         }
     }
     return kmNoMes;
@@ -64,7 +69,7 @@ public class Van extends Veiculo{
      * Retorna o valor de abastecimento do carro
      */
     public double abastecer(double litros) {
-        double valor = litros * Tanque.precoMedio();
+        double valor = litros * Tanque.getPrecoMedio();
         totalReabastecido += litros;
         return valor;
     }
@@ -74,7 +79,7 @@ public class Van extends Veiculo{
      * @return valor 
      */
     public double getAutonomiaAtual() {
-        return KmTotal() / totalReabastecido;
+        return kmTotal() / totalReabastecido;
     }
 
     /**
@@ -86,7 +91,7 @@ public class Van extends Veiculo{
     }
 
     public void fazerManutencao(double valor) {
-        despesaTotal += valor;
+        this.despesaTotal = valor;
     }
 
     /**

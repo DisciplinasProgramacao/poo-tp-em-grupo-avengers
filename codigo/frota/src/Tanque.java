@@ -14,17 +14,15 @@ public class Tanque {
      * @param capacidadeMax capacidade máxima do tanque
      * @param consumo
      */
-    public Tanque(double capacidadeMax, double consumo, String tipoCombustivel) {
-        this.capacidadeMax = capacidadeMax;
-        this.consumo = consumo;
+    public Tanque(String placa, String tipoVeiculo, String tipoCombustivel) {
 
         // Verifica o tipo de combustível fornecido e instancia o objeto correspondente
         if (tipoCombustivel.equals("diesel")) {
-            this.combustivel = new Diesel();
+            Tanque.combustivel = new Diesel();
         } else if (tipoCombustivel.equals("gasolina")) {
-            this.combustivel = new Gasolina();
+            Tanque.combustivel = new Gasolina();
         } else if (tipoCombustivel.equals("alcool")) {
-            this.combustivel = new Alcool();
+            Tanque.combustivel = new Alcool();
         }
     }
 
@@ -64,5 +62,9 @@ public class Tanque {
     }
     public double getCapacidadeAtual() {
         return capacidadeAtual;
+    }
+
+    public static double getPrecoMedio(){
+        return combustivel.precoMedio();
     }
 }
