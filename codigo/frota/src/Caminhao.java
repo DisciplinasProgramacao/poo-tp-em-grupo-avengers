@@ -161,9 +161,6 @@ public class Caminhao {
         this.tanque = tanque;
     }
     
-    public void getConsumo() {
-    	return consumoTotal;
-    }
     //Retorna a ultima vez em que o veiculo sofreu uma manutencao
     public double getUltimaManutencao() {
     	return fezManutencao;
