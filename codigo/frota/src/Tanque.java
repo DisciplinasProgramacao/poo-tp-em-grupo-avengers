@@ -6,13 +6,13 @@ class Tanque {
     private double capacidadeAtual;
     private double totalReabastecido;
 
-    public Tanque(double capacidadeMax, double consumo, String combustivel, Double preco) {
-        this.combustivel = getCombustivel(combustivel, preco);
+    public Tanque(double capacidadeMax, ICombustivel combustivel) {
+        this.combustivel = combustivel;
         this.capacidadeMax = capacidadeMax;
-        this.consumo = consumo;
         this.capacidadeAtual = capacidadeMax;
         this.totalReabastecido = 0;
     }
+
 
     private ICombustivel getCombustivel(String combustivel, Double preco) {
         if (combustivel.equals("álcool")) {
@@ -34,7 +34,7 @@ class Tanque {
         if (capacidadeAtual + litros > capacidadeMax) {
             litros = capacidadeMax - capacidadeAtual;
         }
-        double valor = litros * combustivel.precoMedio(litros);
+        double valor = litros * combustivel.precoMedio();
         capacidadeAtual += litros;
         totalReabastecido += litros;
 
@@ -51,6 +51,24 @@ class Tanque {
 
     public static double getConsumo() {
         return Tanque.getConsumo();
+    }
+
+
+    public double getTanqueAtual() {
+        return capacidadeAtual;
+    }
+
+    public void setTanqueAtual(double capacidade) {
+    }
+
+
+    public Object getCapacidadeMax() {
+        return capacidadeMax;
+    }
+
+
+    public double getTotalReabastecido() {
+        return totalReabastecido;
     }
 
 }

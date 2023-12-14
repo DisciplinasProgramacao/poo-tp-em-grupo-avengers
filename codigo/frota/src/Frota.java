@@ -1,22 +1,22 @@
-
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Frota {
-    private int tamanhoFrota;
     private List<Veiculo> veiculos;
-    
+
     public Frota() {
         this.veiculos = new ArrayList<>();
     }
-    
+
     public String relatorioFrota() {
-        // Gerar um relatório da frota aqui
-        //Total de carros com tamanho do tanque e placa
-        return "";
+        StringBuilder relatorio = new StringBuilder("Relatório da Frota:\n");
+        for (Veiculo veiculo : veiculos) {
+            relatorio.append("Placa: ").append(veiculo.getPlaca()).append(", Tipo: ").append(veiculo.getTipoVeiculo())
+                    .append(", Tanque: ").append(veiculo.getTanque().getCapacidadeMax()).append("L\n");
+        }
+        return relatorio.toString();
     }
-    
+
     public Veiculo localizarVeiculo(String placa) {
         for (Veiculo veiculo : veiculos) {
             if (veiculo.getPlaca().equals(placa)) {
@@ -25,7 +25,7 @@ public class Frota {
         }
         return null;
     }
-    
+
     public double kmTotal() {
         double quilometragemTotal = 0;
         for (Veiculo veiculo : veiculos) {
@@ -33,7 +33,7 @@ public class Frota {
         }
         return quilometragemTotal;
     }
-    
+
     public Veiculo maiorKmTotal() {
         Veiculo veiculoMaiorKmTotal = null;
         double maiorKmTotal = 0;
@@ -45,13 +45,13 @@ public class Frota {
         }
         return veiculoMaiorKmTotal;
     }
-    
+
     public Veiculo maiorKmMedia() {
         Veiculo veiculoMaiorKmMedia = null;
         double maiorKmMedia = 0;
         for (Veiculo veiculo : veiculos) {
-            if (veiculo.quantRotas > 0 && veiculo.kmTotal() / veiculo.quantRotas > maiorKmMedia) {
-                maiorKmMedia = veiculo.kmTotal() / veiculo.quantRotas;
+            if (veiculo.getQuantRotas() > 0 && veiculo.kmTotal() / veiculo.getQuantRotas() > maiorKmMedia) {
+                maiorKmMedia = veiculo.kmTotal() / veiculo.getQuantRotas();
                 veiculoMaiorKmMedia = veiculo;
             }
         }
@@ -62,16 +62,7 @@ public class Frota {
         veiculos.add(veiculo);
     }
 
-
-    //Get and Set
-
-    public int getTamanhoFrota() {
-        return tamanhoFrota;
-    }
-
-    public void setTamanhoFrota(int tamanhoFrota) {
-        this.tamanhoFrota = tamanhoFrota;
-    }
+    // Getters e Setters
 
     public List<Veiculo> getVeiculos() {
         return veiculos;
