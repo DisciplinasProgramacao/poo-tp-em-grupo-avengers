@@ -1,101 +1,50 @@
-import java.util.ArrayList;
-import java.util.List;
+class Carro extends Veiculo {
 
-public class Carro extends Veiculo {
-
-    private static final int MAX_ROTAS = 30;
-    private static String veiculo = "Van";
-	private double totalReabastecido;
-	private int quantRotas;
-	private List<Rota> rotas;	
+    // Atributos privados
+    private double totalReabastecido;
+    private double tanqueAtual;
     private String placa;
-	private Tanque tanque;
-	private Manutencao manutencao = new Manutencao();
-    
-    public Carro(String placa, String tipoCombustivel) {
-        super(placa, veiculo, tipoCombustivel);
+
+    // Métodos construtores
+    public Carro(double consumo, String placa) {
+        super();
         this.placa = placa;
-        this.rotas = new ArrayList<>();
-        this.quantRotas = 0;
+        this.tanqueAtual = tanqueAtual;
+        this.totalReabastecido = totalReabastecido;
     }
-    
-    public boolean addRota(Rota rota) {
-        if (quantRotas < MAX_ROTAS && autonomiaMaxima() >= Rota.getQuilometragem()) {
-            rotas.add(rota);
-            quantRotas++;
-            return true;
-        }
-        return false;
+
+    // Métodos get
+    public double getTotalReabastecido() {
+        return totalReabastecido;
     }
-    
-    public double autonomiaAtual() {
-        return tanque.getCapacidadeAtual() * Tanque.getConsumo();
-    }
-    
-    public double autonomiaMaxima() {
-        return tanque.getCapacidadeMax() * Tanque.getConsumo();
-    }
-    
-    public double abastecer(double litros) {
-        return tanque.abastecer(litros);
-    }
-    
+
+    // Outros métodos
     public double kmNoMes() {
         double quilometragemMes = 0;
         for (Rota rota : rotas) {
-            quilometragemMes += Rota.getQuilometragem();
+            quilometragemMes += rota.getQuilometragem();
         }
         return quilometragemMes;
     }
-    
+
     public double kmTotal() {
         double quilometragemTotal = 0;
         for (Rota rota : rotas) {
-            quilometragemTotal += Rota.getQuilometragem();
+            quilometragemTotal += rota.getQuilometragem();
         }
         return quilometragemTotal;
     }
-    
-    public void percorrerRota(Rota rota) { 
-            tanqueAtual -= Rota.getQuilometragem() / Tanque.getConsumo();
-            rotas.add(rota);
-            quantRotas++;
-    }
-	
-	public void fazerManutencao(){
-			manutencao.fazerManutencao(kmTotal());
-    }
-   //Gets and Setters
-   
-    public Object getPlaca() {
-        return placa;
-    }
 
-    public static int getMaxRotas() {
-        return MAX_ROTAS;
+    public void percorrerRota(Rota rota) {
+        double consumo = Tanque.getConsumo();
+        double quantidadeCombustivel = rota.getQuilometragem() / consumo;
+        tanqueAtual -= quantidadeCombustivel;
+        rotas.add(rota);
+        quantRotas++;
     }
-
-    public static double getConsumo() {
-        return Tanque.getConsumo();
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
-    public List<Rota> getRotas() {
-        return rotas;
-    }
-
-    public void setRotas(List<Rota> rotas) {
-        this.rotas = rotas;
-    }
-
-    public int getQuantRotas() {
-        return quantRotas;
-    }
-
-    public void setQuantRotas(int quantRotas) {
-        this.quantRotas = quantRotas;
+    public Manutencao fazerManutencao(double quilometragem) {
+        Manutencao manutencao = new Manutencao(quilometragem);
+        Manutencao.fazerManutencao();
+        return manutencao;
     }
 }

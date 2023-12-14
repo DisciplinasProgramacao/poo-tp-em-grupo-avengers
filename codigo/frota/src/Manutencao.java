@@ -1,49 +1,46 @@
 import java.util.Date;
+class Manutencao {
 
-public class Manutencao {
-    private double quilometragem;
-    private double valor;
-    private Date data;
+    private static double quilometragem;
+    private static Veiculo veiculo;
+    private Rota rota;
 
-    public void fazerManutencao(double quilometragem) {
+    public Manutencao(double quilometragem) {
         this.quilometragem = quilometragem;
-        this.valor = 200.0; 
-        this.data = new Date();
     }
 
-    public void realizarManutencao() {
-        System.out.println("Manutenção realizada em " + data + " - Valor: " + valor);
+    public static void fazerManutencao() {
+        if (Rota.getQuilometragem() >= quilometragem) {
+            quilometragem = Rota.getQuilometragem();
+
+            if (quilometragem % 10000 == 0) {
+                System.out.println("Manutenção periódica realizada no veículo " + Veiculo.getPlaca() + " com quilometragem " + quilometragem);
+            }
+            if (veiculo instanceof Carro) {
+                if (quilometragem % 10000 == 0) {
+                    System.out.println("Troca de peças realizada no veículo " + Veiculo.getPlaca() + " com quilometragem " + quilometragem);
+                }
+            } else if (veiculo instanceof Van) {
+                if (quilometragem % 12000 == 0) {
+                    System.out.println("Troca de peças realizada no veículo " + Veiculo.getPlaca() + " com quilometragem " + quilometragem);
+                }
+            } else if (veiculo instanceof Furgao) {
+                if (quilometragem % 12000 == 0) {
+                    System.out.println("Troca de peças realizada no veículo " + Veiculo.getPlaca() + " com quilometragem " + quilometragem);
+                }
+            } else if (veiculo instanceof Caminhao) {
+                if (quilometragem % 20000 == 0) {
+                    System.out.println("Manutenção periódica e troca de peças realizada no veículo " + Veiculo.getPlaca() + " com quilometragem " + quilometragem);
+                }
+            }
+        }
     }
 
     @Override
     public String toString() {
-        return "Manutencao{" +
-                "valor=" + valor +
-                ", data=" + data +
+        return "Manutenção{" +
+                "quilometragem=" + quilometragem +
+                ", veiculo=" + veiculo.getPlaca() +
                 '}';
-    }
-    // Getters e Setters
-    public double getQuilometragem() {
-        return quilometragem;
-    }
-
-    public void setQuilometragem(double quilometragem) {
-        this.quilometragem = quilometragem;
-    }
-
-    public double getValor() {
-        return valor;
-    }
-
-    public void setValor(double valor) {
-        this.valor = valor;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
-        this.data = data;
     }
 }

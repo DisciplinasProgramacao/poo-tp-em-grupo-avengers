@@ -1,4 +1,4 @@
 public interface ICombustivel{
-	public double precoMedio();   
+	public double precoMedio(double litros);   
     public double consumoMedio();
 }

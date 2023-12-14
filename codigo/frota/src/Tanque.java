@@ -1,70 +1,56 @@
-import java.util.ArrayList;
-import java.util.List;
+class Tanque {
 
-public class Tanque {
+    private ICombustivel combustivel;
+    private double consumo;
+    private double capacidadeMax;
+    private double capacidadeAtual;
+    private double totalReabastecido;
 
-    private double consumo; 
-    private double capacidadeMax; 
-    private double capacidadeAtual; 
-    private double totalReabastecido; // Total de litros reabastecidos desde a criação do tanque
-    private static ICombustivel combustivel; // Tipo de combustível associado ao tanque
-
-    /**
-     * Construtor da classe Tanque
-     * @param capacidadeMax capacidade máxima do tanque
-     * @param consumo
-     */
-    public Tanque(String placa, String tipoVeiculo, String tipoCombustivel) {
-
-        // Verifica o tipo de combustível fornecido e instancia o objeto correspondente
-        if (tipoCombustivel.equals("diesel")) {
-            Tanque.combustivel = new Diesel();
-        } else if (tipoCombustivel.equals("gasolina")) {
-            Tanque.combustivel = new Gasolina();
-        } else if (tipoCombustivel.equals("alcool")) {
-            Tanque.combustivel = new Alcool();
-        }
+    public Tanque(double capacidadeMax, double consumo, String combustivel, Double preco) {
+        this.combustivel = getCombustivel(combustivel, preco);
+        this.capacidadeMax = capacidadeMax;
+        this.consumo = consumo;
+        this.capacidadeAtual = capacidadeMax;
+        this.totalReabastecido = 0;
     }
 
-    /**
-     * Abastece o tanque com uma quantidade especifica de litros.
-     * @param litros quantidade que foi abstecido.
-     */
-    public double abastecer(double litros) {
-        if (capacidadeAtual + litros <= capacidadeMax) {
-            capacidadeAtual += litros;
-            totalReabastecido += litros;
-            return litros;
+    private ICombustivel getCombustivel(String combustivel, Double preco) {
+        if (combustivel.equals("álcool")) {
+            return new Alcool();
+        } else if (combustivel.equals("gasolina")) {
+            return new Gasolina();
+        } else if (combustivel.equals("diesel")) {
+            return new Diesel();
         } else {
-            // Se a capacidade atual mais os litros ultrapassarem a capacidade máxima, não é possível abastecer tudo
-            return 0;
+            throw new IllegalArgumentException("Combustivel inválido");
         }
     }
 
-    // Método que retorna a autonomia máxima do veículo com o tanque cheio
+    public double abastecer(double litros) {
+        if (litros <= 0) {
+            throw new IllegalArgumentException("Quantidade de litros inválida");
+        }
+
+        if (capacidadeAtual + litros > capacidadeMax) {
+            litros = capacidadeMax - capacidadeAtual;
+        }
+        double valor = litros * combustivel.precoMedio(litros);
+        capacidadeAtual += litros;
+        totalReabastecido += litros;
+
+        return valor;
+    }
+
     public double autonomiaMaxima() {
-        return combustivel.consumoMedio() * capacidadeMax;
+        return capacidadeMax / consumo;
     }
 
-    // Método que retorna a autonomia atual do veículo com o combustível atual no tanque
     public double autonomiaAtual() {
-        return combustivel.consumoMedio() * capacidadeAtual;
+        return capacidadeAtual / consumo;
     }
 
-    // Método estático que retorna o consumo médio do combustível associado ao tanque
     public static double getConsumo() {
-        return combustivel.consumoMedio();
+        return Tanque.getConsumo();
     }
 
-    // Métodos para obter a capacidade máxima e a capacidade atual do tanque
-    public double getCapacidadeMax() {
-        return capacidadeMax;
-    }
-    public double getCapacidadeAtual() {
-        return capacidadeAtual;
-    }
-
-    public static double getPrecoMedio(){
-        return combustivel.precoMedio();
-    }
 }
