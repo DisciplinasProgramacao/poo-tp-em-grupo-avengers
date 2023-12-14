@@ -1,49 +1,11 @@
 class Caminhao extends Veiculo {
 
     // Atributos privados
-    private double totalReabastecido;
-    private double tanqueAtual;
-    private String placa;
-    private double consumo;
+    private static String veiculo = "Caminhao";
+    private static final double tamTanque = 250;
 
     // Métodos construtores
-    public Caminhao(double consumo, String placa) {
-        this.consumo = consumo;
-        this.placa = placa;
-    }
-
-    // Métodos get
-    public double getTotalReabastecido() {
-        return totalReabastecido;
-    }
-
-    // Outros métodos
-    public double kmNoMes() {
-        double quilometragemMes = 0;
-        for (Rota rota : rotas) {
-            quilometragemMes += rota.getQuilometragem();
-        }
-        return quilometragemMes;
-    }
-
-    public double kmTotal() {
-        double quilometragemTotal = 0;
-        for (Rota rota : rotas) {
-            quilometragemTotal += rota.getQuilometragem();
-        }
-        return quilometragemTotal;
-    }
-
-    public void percorrerRota(Rota rota) {
-        double consumo = Tanque.getConsumo();
-        double quantidadeCombustivel = rota.getQuilometragem() / consumo;
-        tanqueAtual -= quantidadeCombustivel;
-        rotas.add(rota);
-        quantRotas++;
-    }
-    public Manutencao fazerManutencao(double quilometragem) {
-        Manutencao manutencao = new Manutencao(quilometragem);
-        Manutencao.fazerManutencao();
-        return manutencao;
+    public Caminhao(String placa, ICombustivel tipoCombustivel) {
+        super(placa, veiculo, new Tanque(tamTanque, tipoCombustivel));
     }
 }

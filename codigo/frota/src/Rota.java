@@ -1,41 +1,57 @@
-
+import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Rota {
-    private static double quilometragem;
-    private static String data;
-    private int quantCarro;
-    
-    public Rota(double quilometragem, String data) {
-        Rota.quilometragem = quilometragem;
-        quantCarro++;
-        Rota.data = data;
+    private String id;
+    private Map<String, Double> rota; // Usando um Map para armazenar os quilômetros por localização
+    private LocalDate data; // Data da rota
+
+    public Rota(String id) {
+        this.id = id;
+        this.rota = new HashMap<>();
+        this.data = LocalDate.now(); // Data atual ao criar a rota
+    }
+
+    public void addRota(String localizacao, double quilometros) {
+        rota.put(localizacao, quilometros);
     }
     
-    public String relatorio() {
-        // Gerar um relatório da rota aqui
-        //Mostar a quantidade de carros e o dia do relatorio
-    	StringBuilder relat = new StringBuilder("Relatório de rota");
-		relat.append("A rota possui "+ quilometragem +" quilometros ");
-    	relat.append(quantCarro + "\n" + data);
-        return relat.toString();
+    public void relatorio() {
+        System.out.println("Relatório da Rota " + id + ":");
+        for (Map.Entry<String, Double> entry : rota.entrySet()) {
+            System.out.println("Localização: " + entry.getKey() + ", Quilômetros: " + entry.getValue());
+        }
     }
 
-
-    //Get and Set
-
-    public static double getQuilometragem() {
-        return quilometragem;
+    public double getQuilometragem() {
+        // Somando os quilômetros percorridos em todas as localizações da rota
+        return rota.values().stream().mapToDouble(Double::doubleValue).sum();
     }
 
-    public void setQuilometragem(double quilometragem) {
-        Rota.quilometragem = quilometragem;
-    }
-
-    public static String getData() {
+    public LocalDate getData() {
         return data;
     }
+    
+    // Getters e Setters
 
-    public void setData(String data) {
-        Rota.data = data;
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Map<String, Double> getRota() {
+        return rota;
+    }
+
+    public void setRota(Map<String, Double> rota) {
+        this.rota = rota;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 }

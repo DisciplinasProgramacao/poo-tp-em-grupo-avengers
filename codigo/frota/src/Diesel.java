@@ -1,14 +1,14 @@
-public class Diesel implements ICombustivel{
-	private double consumo = 4;
-	private double preco = 6.09;
+public class Diesel implements ICombustivel {
+    private double consumo = 4;
+    private double preco = 6.09;
+
     @Override
-    public double precoMedio(double preco) {
-        double valor = this.preco;
-        return valor;
+    public double precoMedio() {
+        return preco;
     }
+
     @Override
     public double consumoMedio() {
-        double valor = this.consumo;
-        return valor;
+        return consumo;
     }
 }
