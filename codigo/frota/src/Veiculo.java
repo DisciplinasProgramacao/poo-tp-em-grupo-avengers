@@ -44,7 +44,7 @@ public class Veiculo {
         rotasPorMes.remove(mesPassado); // Remove as rotas do mês passado
     }
 
-    public String relatorioRotas() {
+    /*public String relatorioRotas() {
         StringBuilder relatorio = new StringBuilder("Relatório de Rotas do Veículo " + placa + ":\n");
         for (Map.Entry<String, Rota> entry : rotas.entrySet()) {
             String idRota = entry.getKey();
@@ -52,7 +52,7 @@ public class Veiculo {
             relatorio.append("ID da Rota: ").append(idRota).append(", Quilometragem: ").append(rota.getQuilometragem()).append(", Data: ").append(rota.getData()).append("\n");
         }
         return relatorio.toString();
-    }
+    }*/
     
     
     public double KmNoMes() {
@@ -91,10 +91,6 @@ public class Veiculo {
             return true;
         }
         return false;
-    }
-
-    public void realizarManutencao(Veiculo veiculo, double quilometragem) {
-        Manutencao.fazerManutencao(veiculo, quilometragem);
     }
 
     public double calcularDespesaTotal() {

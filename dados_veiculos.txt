@@ -1,0 +1,10 @@
+Placa: MNO7890, Tipo: Diesel, Tanque: 20.007503784801738L, Preço: R$3.2238944341413545 por litro
+Placa: GHI9012, Tipo: Gasolina, Tanque: 90.31555643568592L, Preço: R$9.732829467539256 por litro
+Placa: DEF5678, Tipo: Diesel, Tanque: 5.799811485769268L, Preço: R$3.624975512460711 por litro
+Placa: JKL3456, Tipo: Gasolina, Tanque: 80.41457251991855L, Preço: R$2.604330917446002 por litro
+Placa: DEF5678, Tipo: Álcool, Tanque: 79.8299825400066L, Preço: R$2.3276091563247094 por litro
+Placa: DEF5678, Tipo: Gasolina, Tanque: 92.92874108045196L, Preço: R$0.9182799367669503 por litro
+Placa: ABC1234, Tipo: Gasolina, Tanque: 36.384026755565344L, Preço: R$5.767420900261726 por litro
+Placa: ABC1234, Tipo: Diesel, Tanque: 8.115511843367374L, Preço: R$3.314251978562531 por litro
+Placa: ABC1234, Tipo: Diesel, Tanque: 43.383497517027216L, Preço: R$3.1139259205138945 por litro
+Placa: ABC1234, Tipo: Álcool, Tanque: 83.55157638528352L, Preço: R$9.482890096804992 por litro

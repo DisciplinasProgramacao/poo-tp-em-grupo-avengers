@@ -1,14 +1,9 @@
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-
 public class Furgao extends Veiculo{
 
-    private static final double tamTanque = 80;
-    private static String veiculo = "Furgao";
+    private static final double TAM_TANQUE = 80;
+    private static final String VEICULO = "Furgao";
 
     public Furgao(String placa, ICombustivel tipoCombustivel) {
-        super(placa, veiculo, new Tanque(tamTanque, tipoCombustivel));
+        super(placa, VEICULO, new Tanque(TAM_TANQUE, tipoCombustivel));
     }
 }

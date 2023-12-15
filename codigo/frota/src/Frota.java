@@ -26,14 +26,6 @@ public class Frota {
         return null;
     }
 
-    public double kmTotal() {
-        double quilometragemTotal = 0;
-        for (Veiculo veiculo : veiculos) {
-            quilometragemTotal += veiculo.kmTotal();
-        }
-        return quilometragemTotal;
-    }
-
     public Veiculo maiorKmTotal() {
         Veiculo veiculoMaiorKmTotal = null;
         double maiorKmTotal = 0;
